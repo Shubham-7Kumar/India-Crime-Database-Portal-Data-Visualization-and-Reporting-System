@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Crime | India Crime Database</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="report.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h1>India Crime Database</h1>
+                </div>
+                <div class="auth-section">
+                    <a href="/" class="btn btn-ghost">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div id="reportPage" class="report-page">
+            <!-- Report Form Section -->
+            <div id="formSection" class="form-section active">
+                <div class="container">
+                    <div class="form-container">
+                        <div class="form-header">
+                            <h1>Report a Crime</h1>
+                            <p>Help us maintain accurate crime statistics by submitting incident reports. All information is confidential.</p>
+                        </div>
+
+                        <form id="crimeReportForm" class="crime-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Full Name *</label>
+                                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="phone">Phone Number *</label>
+                                    <input type="tel" id="phone" name="phone" required placeholder="+91 XXXXX XXXXX">
+                                </div>
+                                <div class="form-group">
+                                    <label for="location">Location *</label>
+                                    <input type="text" id="location" name="location" required placeholder="City, State">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="crime_type">Crime Type *</label>
+                                <select id="crime_type" name="crime_type" required>
+                                    <option value="">Select a crime type</option>
+                                    <option value="theft">Theft</option>
+                                    <option value="assault">Assault</option>
+                                    <option value="burglary">Burglary</option>
+                                    <option value="cybercrime">Cybercrime</option>
+                                    <option value="fraud">Fraud</option>
+                                    <option value="harassment">Harassment</option>
+                                    <option value="property_damage">Property Damage</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="date">Date of Incident *</label>
+                                <input type="date" id="date" name="date" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Description of Incident *</label>
+                                <textarea id="description" name="description" required placeholder="Provide detailed information about the crime..." rows="6"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-submit">Submit Report</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Message Section -->
+            <div id="successSection" class="success-section" style="display: none;">
+                <div class="container">
+                    <div class="success-container">
+                        <div class="success-icon">✓</div>
+                        <h2>Report Submitted Successfully</h2>
+                        <p>Thank you for your report. Your submission has been received and will be reviewed by our team.</p>
+                        <p class="report-id" id="reportId"></p>
+                        <a href="/report" class="btn btn-primary">Submit Another Report</a>
+                        <a href="/" class="btn btn-outline">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Section -->
+            <div class="admin-section">
+                <div class="container">
+                    <button id="adminToggle" class="btn btn-admin">View Submitted Reports (Admin)</button>
+                </div>
+            </div>
+
+            <!-- Admin Reports Section -->
+            <div id="adminPanel" class="admin-panel" style="display: none;">
+                <div class="container">
+                    <div class="admin-container">
+                        <div class="admin-header">
+                            <h2>Submitted Crime Reports</h2>
+                            <button id="adminClose" class="close-btn">&times;</button>
+                        </div>
+
+                        <div class="admin-login" id="adminLogin">
+                            <h3>Admin Login</h3>
+                            <div class="form-group">
+                                <label for="adminPassword">Password</label>
+                                <input type="password" id="adminPassword" placeholder="Enter admin password">
+                            </div>
+                            <button id="adminLoginBtn" class="btn btn-primary">Login</button>
+                        </div>
+
+                        <div class="admin-reports" id="adminReports" style="display: none;">
+                            <div class="reports-filter">
+                                <p id="reportCount" class="report-count"></p>
+                                <div class="admin-actions">
+                                    <button id="exportReports" class="btn-export">Export CSV</button>
+                                    <button id="deleteAllReports" class="btn-delete-all">Delete All</button>
+                                    <button id="refreshReports" class="btn btn-outline">Refresh</button>
+                                    <button id="adminLogout" class="btn btn-outline">Logout</button>
+                                </div>
+                            </div>
+                            <div id="reportsList" class="reports-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="report.js"></script>
+</body>
+</html>
